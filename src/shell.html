@@ -1,0 +1,41 @@
+<title>Peregrinos</title>
+<meta name="description" content="Plataforma cooperativa cristã para 1 a 4 jogadores: vença os pecados, colha os Frutos do Espírito e cresça em semelhança com Cristo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Uma única aparência noturna: o jogo vive num céu escuro em qualquer tema. */
+  :root { color-scheme: dark; --bg: #07060b; --ink: #f4efe4; --muted: #c8c0d8; --gold: #e8c070; --glow: rgba(255, 214, 140, .55); }
+  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--ink); overflow: hidden; }
+  #wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--bg); }
+  #stage { position: relative; }
+  #game, #ui { position: absolute; left: 0; top: 0; display: block; }
+  #game { image-rendering: pixelated; image-rendering: crisp-edges; }
+  #ui { pointer-events: none; }
+  #start { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    background: radial-gradient(ellipse at 70% 40%, rgba(255, 220, 150, .12), transparent 60%), rgba(7, 6, 11, .94);
+    cursor: pointer; text-align: center; padding-block: 24px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  #start h1 { font-family: "Cinzel", Georgia, serif; font-weight: 700; font-size: clamp(30px, 8vw, 72px); letter-spacing: .08em; margin: 0; color: #fff3d6; text-shadow: 0 0 22px var(--glow); text-wrap: balance; }
+  #start .sub { font-family: "Cinzel", Georgia, serif; color: var(--gold); font-size: clamp(14px, 2.6vw, 22px); margin: 0; }
+  #start .go { font-family: "Pixelify Sans", system-ui, sans-serif; color: var(--ink); font-size: clamp(13px, 2vw, 17px); margin: 10px 0 0; padding: 8px 18px; border: 1px solid rgba(232, 192, 112, .6); border-radius: 3px; }
+  #start .note { font-family: "Pixelify Sans", system-ui, sans-serif; color: var(--muted); font-size: 13px; max-width: 46ch; margin: 0; line-height: 1.45; }
+  #start[hidden] { display: none; }
+  #start:focus-visible { outline: 2px solid var(--gold); outline-offset: -6px; }
+  @media (prefers-reduced-motion: no-preference) { #start .go { animation: pulse 1.6s ease-in-out infinite; } }
+  @keyframes pulse { 50% { opacity: .55; } }
+</style>
+<div id="wrap">
+  <div id="stage">
+    <canvas id="game" width="640" height="360"></canvas>
+    <canvas id="ui"></canvas>
+  </div>
+</div>
+<div id="start" tabindex="0" role="button" aria-label="Começar">
+  <h1>PEREGRINOS</h1>
+  <p class="sub">O Caminho Estreito</p>
+  <p class="go">Clique ou pressione uma tecla para começar</p>
+  <p class="note">Jogue com teclado (até 2 pessoas) ou controles (até 4). Com som: use fones ou caixas de som.</p>
+</div>
+<script>
+/*__GAME__*/
+</script>
