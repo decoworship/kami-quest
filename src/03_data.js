@@ -3,28 +3,28 @@
 // ============================================================
 const CHARACTERS = [
   {
-    id: 'peregrino', name: 'Peregrino', title: 'Deixou a Cidade da Destruição',
+    id: 'peregrino', name: 'Rowan', cls: 'Peregrino', title: 'Deixou a Cidade da Destruição',
     ranged: 'arco', melee: 'espada', color: '#5b8ff0',
     trait: 'Ágil: o dash recarrega mais rápido.',
     verse: '"...estrangeiros e peregrinos sobre a terra."', ref: 'Hb 11:13',
     pal: { tunic: '#4f86e0', dark: '#2c4f9e', cape: '#24407f', hood: '#2a3f78', skin: '#f1c7a0', pants: '#3b3330', boots: '#6b4426', belt: '#c9933f', acc: '#d9b26a' },
   },
   {
-    id: 'guardiao', name: 'Guardião', title: 'Sentinela sobre os muros',
+    id: 'guardiao', name: 'Garrett', cls: 'Guardião', title: 'Sentinela sobre os muros',
     ranged: 'besta', melee: 'espada', color: '#e0523f',
     trait: 'Firme: +1 coração e recua menos ao ser ferido.',
     verse: '"Sobre os teus muros, ó Jerusalém, pus guardas."', ref: 'Is 62:6',
     pal: { tunic: '#c43d2e', dark: '#7f2219', cape: '#8f2a1e', hood: '#c9ced6', skin: '#c98e62', pants: '#3a2c2c', boots: '#4a3a30', belt: '#e8b83a', acc: '#e8b83a' },
   },
   {
-    id: 'pastora', name: 'Pastora', title: 'Como Davi diante do gigante',
+    id: 'pastor', name: 'Wesley', cls: 'Pastor', title: 'Cuida do rebanho pelo caminho',
     ranged: 'funda', melee: 'cajado', color: '#4fb85c',
     trait: 'Leve: salta mais alto. Cajado de golpe amplo.',
-    verse: '"...eu vou contra ti em nome do SENHOR dos Exércitos."', ref: '1 Sm 17:45',
-    pal: { tunic: '#3f9e4d', dark: '#23682f', cape: '#2d7a3a', hood: '#ece2c4', skin: '#a8744f', pants: '#5a4630', boots: '#6b4a2b', belt: '#8b5a2b', acc: '#c7b98f' },
+    verse: '"Pastoreai o rebanho de Deus que há entre vós."', ref: '1 Pe 5:2',
+    pal: { tunic: '#3f9e4d', dark: '#23682f', cape: '#2d7a3a', hood: '#e6dcc0', skin: '#b07a52', pants: '#5a4630', boots: '#6b4a2b', belt: '#8b5a2b', acc: '#8b5a2b', beard: '#4a3020' },
   },
   {
-    id: 'vigia', name: 'Vigia', title: 'Com a lâmpada sempre acesa',
+    id: 'vigia', name: 'Lucy', cls: 'Vigia', title: 'Com a lâmpada sempre acesa',
     ranged: 'arcoleve', melee: 'espada', color: '#a57cf0',
     trait: 'Lâmpada: ilumina mais e revela paredes falsas por perto.',
     verse: '"Vigiai, pois, porque não sabeis o dia nem a hora."', ref: 'Mt 25:13',

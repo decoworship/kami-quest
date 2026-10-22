@@ -1,0 +1,76 @@
+<title>Catálogo dos Peregrinos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Todos os personagens, inimigos, chefes, frutos, dons, elementos e cenários do jogo Peregrinos, desenhados pelo próprio código do jogo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Layout: índice fixo no topo, seções em grade de cartões; cada cartão é uma "vitrine" escura com o sprite vivo. */
+  :root {
+    color-scheme: dark;
+    --bg: #0d0b16; --panel: #17142a; --panel-2: #1f1b36; --line: #2e2848;
+    --ink: #f4efe4; --muted: #b8b0cc; --gold: #e8c070; --gold-soft: #d8b26a;
+    --f-title: "Cinzel", "Palatino Linotype", Georgia, serif;
+    --f-ui: "Pixelify Sans", "Trebuchet MS", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 15px; line-height: 1.45; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .hero { display: grid; gap: 6px; margin-bottom: 18px; }
+  .hero h1 { font-family: var(--f-title); font-weight: 700; font-size: clamp(30px, 5vw, 50px); letter-spacing: .06em; margin: 0; color: #fff3d6; text-wrap: balance; text-shadow: 0 0 24px rgba(255, 214, 140, .35); }
+  .hero p { margin: 0; color: var(--muted); max-width: 70ch; }
+  .hero .meta { color: var(--gold-soft); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(13, 11, 22, .94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))) 26px; padding: 10px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+  nav.toc a { color: var(--muted); text-decoration: none; font-size: 13px; letter-spacing: .04em; padding: 2px 0; border-bottom: 1px solid transparent; }
+  nav.toc a:hover, nav.toc a:focus-visible { color: var(--gold); border-bottom-color: var(--gold); outline: none; }
+  section { margin-bottom: 40px; scroll-margin-top: 64px; }
+  .sec-head { display: grid; gap: 4px; margin-bottom: 14px; }
+  .sec-head h2 { font-family: var(--f-title); font-weight: 700; font-size: 24px; margin: 0; color: #fff3d6; text-wrap: balance; }
+  .sec-head p { margin: 0; color: var(--muted); max-width: 75ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+  .card.wide { grid-column: span 2; }
+  @media (max-width: 560px) { .card.wide { grid-column: span 1; } }
+  .stage { display: grid; place-items: center; padding: 14px; min-height: 150px; background: radial-gradient(ellipse at 50% 80%, #2a2448, #120f22 70%); border-bottom: 1px solid var(--line); }
+  .stage canvas { display: block; max-width: 100%; height: auto; image-rendering: pixelated; image-rendering: crisp-edges; }
+  .card.wide .stage { padding: 0; }
+  .card.wide .stage canvas { width: 100%; }
+  .bg-p0 { background: radial-gradient(ellipse at 50% 85%, #3d3466, #17142a 72%); }
+  .bg-p1 { background: radial-gradient(ellipse at 50% 85%, #5a2050, #1a0920 72%); }
+  .bg-p2 { background: radial-gradient(ellipse at 50% 85%, #4a1a0c, #120404 72%); }
+  .bg-p3 { background: radial-gradient(ellipse at 50% 85%, #0d2a4a, #02040c 72%); }
+  .bg-p4 { background: radial-gradient(ellipse at 50% 85%, #3c3a46, #111115 72%); }
+  .body { padding: 12px 14px 14px; display: grid; gap: 5px; }
+  .names { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .names h3 { font-family: var(--f-title); font-weight: 700; font-size: 18px; margin: 0; color: #fff3d6; }
+  .names .en { color: var(--muted); font-size: 12px; letter-spacing: .05em; }
+  .tag { margin: 0; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .desc { margin: 0; color: #e4dcf0; font-size: 14px; }
+  .ref { margin: 0; color: var(--muted); font-size: 12.5px; font-style: italic; }
+  footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+<div class="wrap">
+  <header class="hero">
+    <span class="meta">Peregrinos · O Caminho Estreito · <span id="count">catálogo</span></span>
+    <h1>Catálogo do jogo</h1>
+    <p>Tudo o que aparece no jogo, desenhado ao vivo pelo próprio código de renderização. Os sprites estão no tamanho original de pixel, ampliados para facilitar a avaliação; ao lado do nome em português vai o nome usado na versão em inglês.</p>
+  </header>
+  <nav class="toc" aria-label="Seções">
+    <a href="#personagens">Personagens</a>
+    <a href="#inimigos-1">Inimigos</a>
+    <a href="#chefes">Chefes</a>
+    <a href="#frutos">Frutos</a>
+    <a href="#dons">Dons</a>
+    <a href="#elementos">Elementos</a>
+    <a href="#cativos">Cativos</a>
+    <a href="#cenarios">Cenários</a>
+  </nav>
+  <main id="content"></main>
+  <footer>Gerado a partir do código do jogo (ferramenta <code>tools/build_catalog.js</code>). Versículos breves das traduções de Almeida.</footer>
+</div>
+<script>
+/*__GAME__*/
+</script>

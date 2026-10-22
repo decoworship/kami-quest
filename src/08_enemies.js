@@ -4,8 +4,9 @@
 class Enemy {
   constructor(type, x, y, sc, o = {}) {
     const t = ETYPES[type];
-    this.type = type; this.t = t; this.w = t.w; this.h = t.h;
-    this.x = Math.round(x - t.w / 2); this.y = Math.round(mod(y - t.h, WORLD_H));
+    this.type = type; this.t = t; this.S = SPRITE_SCALE; this.bw = t.w; this.bh = t.h;
+    this.w = Math.round(t.w * this.S); this.h = Math.round(t.h * this.S);
+    this.x = Math.round(x - this.w / 2); this.y = Math.round(mod(y - this.h, WORLD_H));
     this.rx = 0; this.ry = 0; this.vx = 0; this.vy = 0; this.kx = 0; this.ky = 0;
     this.facing = chance(0.5) ? 1 : -1;
     this.maxHp = Math.max(1, Math.round(t.hp * sc.diff.ehp)); this.hp = this.maxHp;
@@ -86,11 +87,11 @@ class Enemy {
     const ol = () => '#0b0912';
     const ghost = this.type === 'sombra' || this.type === 'nevoa';
     G.globalAlpha = this.alpha;
-    wrapDraw(this.y, this.h, oy => {
-      const x = Math.round(this.x), y = Math.round(this.y) + oy;
-      if (!ghost) { G.globalAlpha = this.alpha * 0.85; for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) EDRAW[this.type](this, x + dx, y + dy, ol); G.globalAlpha = this.alpha; }
+    wrapDraw(this.y, this.h, oy => spriteDraw(this.x + this.w / 2, this.y + this.h + oy, (bx, by) => {
+      const x = bx - Math.round(this.bw / 2), y = by - this.bh;
+      if (!ghost) { G.globalAlpha = 0.85; for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) EDRAW[this.type](this, x + dx, y + dy, ol); G.globalAlpha = 1; }
       EDRAW[this.type](this, x, y, c);
-    });
+    }));
     G.globalAlpha = 1;
   }
 }

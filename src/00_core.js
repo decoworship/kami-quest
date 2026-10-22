@@ -57,6 +57,24 @@ function angTo(a, b) { return Math.atan2(wrapDY(ecy(b) - ecy(a)), ecx(b) - ecx(a
 // Desenho em pixel (contexto global G = jogo, U = interface)
 // ------------------------------------------------------------
 let G = null, U = null;
+let RES = 2;              // pixels do canvas por pixel do jogo (ajustado à tela)
+let SPRITE_SCALE = 1.25;  // escala de personagens e inimigos (opção do jogo)
+function resetG() { G.setTransform(RES, 0, 0, RES, 0, 0); G.globalAlpha = 1; G.imageSmoothingEnabled = false; }
+
+// Desenha um sprite num buffer em tamanho original e o amplia sem borrar.
+// (ax, ay) = âncora no mundo (centro dos pés); fn(bx, by) desenha com a âncora em (bx, by).
+const SPRBUF = { c: null, x: null, size: 128, ax: 64, ay: 96 };
+function spriteDraw(ax, ay, fn) {
+  const S = SPRITE_SCALE;
+  if (S === 1) { fn(Math.round(ax), Math.round(ay)); return; }
+  if (!SPRBUF.c) { SPRBUF.c = document.createElement('canvas'); SPRBUF.c.width = SPRBUF.c.height = SPRBUF.size; SPRBUF.x = SPRBUF.c.getContext('2d'); }
+  const main = G, a = main.globalAlpha;
+  G = SPRBUF.x; G.setTransform(1, 0, 0, 1, 0, 0); G.globalAlpha = 1; G.clearRect(0, 0, SPRBUF.size, SPRBUF.size);
+  try { fn(SPRBUF.ax, SPRBUF.ay); } finally { G = main; }
+  const dx = Math.round((ax - SPRBUF.ax * S) * RES) / RES, dy = Math.round((ay - SPRBUF.ay * S) * RES) / RES;
+  G.globalAlpha = a;
+  G.drawImage(SPRBUF.c, dx, dy, SPRBUF.size * S, SPRBUF.size * S);
+}
 
 function R(x, y, w, h, c) { G.fillStyle = c; G.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
 function circ(x, y, r, c) {
@@ -200,7 +218,7 @@ const Save = {
   data: null,
   fresh() {
     return {
-      v: 1, started: false, diff: 1, unlocked: 1,
+      v: 1, started: false, diff: 1, unlocked: 1, lang: null, spriteScale: 1.25,
       phases: [0, 1, 2, 3, 4].map(() => ({ done: false, boss: false, scrolls: [], captives: [], best: 0 })),
       gifts: [], fruitsSeen: [], party: null, ending: false,
     };
@@ -216,6 +234,6 @@ const Save = {
     } catch (e) { /* sem armazenamento: segue sem salvar */ }
   },
   write() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(this.data)); } catch (e) { } },
-  reset() { this.data = this.fresh(); this.write(); },
+  reset() { const keep = this.data ? { lang: this.data.lang, spriteScale: this.data.spriteScale } : {}; this.data = Object.assign(this.fresh(), keep); this.write(); },
   hasGift(g) { return this.data.gifts.includes(g); },
 };

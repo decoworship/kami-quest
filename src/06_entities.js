@@ -374,7 +374,7 @@ function drawPerson(x, y, look, o = {}) { // x = centro, y = pés
 
 class Captive {
   constructor(sp, style, lines, known) {
-    this.id = sp.id; this.x = sp.c * TS + 3; this.y = sp.r * TS + 2; this.w = 10; this.h = 14; this.style = style;
+    this.id = sp.id; this.w = Math.round(10 * SPRITE_SCALE); this.h = Math.round(14 * SPRITE_SCALE); this.x = sp.c * TS + 8 - Math.round(this.w / 2); this.y = (sp.r + 1) * TS - this.h; this.style = style;
     this.hp = 3; this.freed = false; this.ft = 0; this.t = randi(0, 100); this.shakeT = 0; this.dead = false; this.hittable = true; this.known = known;
     this.look = { skin: pick(SKIN), hair: pick(HAIR), cloth: pick(CLOTH) }; this.line = pick(lines); this.light = 26; this.vy = 0;
   }
@@ -402,7 +402,10 @@ class Captive {
   bindColor() { return { casulo: '#d8d4e8', gaiola: '#f2cf5b', correntes: '#ff7a3a', bolha: '#9ff0ff', sombra: '#4a4458' }[this.style]; }
   draw(sc) {
     const sx = this.shakeT > 0 ? ((this.shakeT % 2) * 2 - 1) : 0;
-    const x = this.x + 5 + sx, y = this.y + 14, t = this.t;
+    spriteDraw(this.x + this.w / 2 + sx, this.y + this.h, (x, y) => this.render(x, y));
+  }
+  render(x, y) {
+    const t = this.t;
     if (this.freed) {
       const a = this.ft > 110 ? (150 - this.ft) / 40 : 1;
       G.globalAlpha = clamp(a, 0, 1);
@@ -462,7 +465,7 @@ class Spring {
     for (const p of sc.players) {
       if (p.state !== 'alive' || p.vy < 0) continue;
       if (overlapR(p.x, p.y + p.h - 4, p.w, 4, this.x, this.y, this.w, this.h)) {
-        p.vy = p.ch.id === 'pastora' ? -10.4 : -9.8; p.ry = 0; p.dashes = p.maxDashes; p.airJumps = p.maxAirJumps; p.jumpCut = false; p.grounded = false; p.coyote = 0; p.springT = 20;
+        p.vy = p.ch.id === 'pastor' ? -10.4 : -9.8; p.ry = 0; p.dashes = p.maxDashes; p.airJumps = p.maxAirJumps; p.jumpCut = false; p.grounded = false; p.coyote = 0; p.springT = 20;
         this.t = 12; Snd.play('spring');
         for (let i = 0; i < 8; i++) sc.part(this.x + 7, this.y, rand(-1.5, 1.5), rand(-2.5, -0.5), '#9fe8ff', 26, 2, 0.08);
       }

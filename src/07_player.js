@@ -10,7 +10,7 @@ const PH = {
 class Player {
   constructor(slot, ci, dev, sc) {
     this.slot = slot; this.ci = ci; this.ch = CHARACTERS[ci]; this.dev = dev;
-    this.w = 8; this.h = 12; this.x = 0; this.y = 0; this.rx = 0; this.ry = 0; this.vx = 0; this.vy = 0; this.bnd = null;
+    this.S = SPRITE_SCALE; this.w = Math.round(8 * this.S); this.h = Math.round(12 * this.S); this.x = 0; this.y = 0; this.rx = 0; this.ry = 0; this.vx = 0; this.vy = 0; this.bnd = null;
     this.facing = 1; this.grounded = false; this.coyote = 0; this.jumpBuf = 0; this.jumpCut = false;
     const d = sc.diff;
     this.maxHp = d.hearts + (this.ch.id === 'guardiao' ? 1 : 0) + (Save.hasGift('cura') ? 1 : 0);
@@ -27,7 +27,7 @@ class Player {
   }
   get cx() { return this.x + this.w / 2; } get cy() { return this.y + this.h / 2; }
   fruit() { return this.slots[this.active]; }
-  jumpV() { return this.ch.id === 'pastora' ? -6.1 : PH.jump; }
+  jumpV() { return this.ch.id === 'pastor' ? -6.1 : PH.jump; }
 
   update(sc) {
     this.t++;
@@ -37,7 +37,7 @@ class Player {
     const mx = (held('r') ? 1 : 0) - (held('l') ? 1 : 0);
     const my = (held('d') ? 1 : 0) - (held('u') ? 1 : 0);
 
-    if (pr('swap')) { this.active = 1 - this.active; Snd.play('swap'); this.fruitFlash = 50; const f = this.fruit(); sc.ftext(f ? FRUITS[f].name : 'Sem fruto', this.cx, this.y - 8, f ? FRUITS[f].color : '#aaa'); }
+    if (pr('swap')) { this.active = 1 - this.active; Snd.play('swap'); this.fruitFlash = 50; const f = this.fruit(); sc.ftext(f ? FRUITS[f].name : t('noFruit'), this.cx, this.y - 8, f ? FRUITS[f].color : '#aaa'); }
     if (pr('special')) this.useLouvor(sc);
 
     const was = this.grounded;
@@ -172,10 +172,11 @@ class Player {
   // ---------------- Espada / cajado ----------------
   swordBox() {
     const big = Save.hasGift('sabedoria'), caj = this.ch.melee === 'cajado';
-    const reach = (caj ? 22 : 19) + (big ? 6 : 0), thick = (caj ? 22 : 17) + (big ? 5 : 0);
-    if (this.swordDir === 'u') return { x: this.x + 4 - thick / 2, y: this.y - reach + 3, w: thick, h: reach };
-    if (this.swordDir === 'd') return { x: this.x + 4 - thick / 2, y: this.y + this.h - 3, w: thick, h: reach };
-    return { x: this.facing > 0 ? this.x + this.w - 3 : this.x - reach + 3, y: this.y + 6 - thick / 2, w: reach, h: thick };
+    const S = this.S, cx = this.x + this.w / 2;
+    const reach = Math.round(((caj ? 22 : 19) + (big ? 6 : 0)) * S), thick = Math.round(((caj ? 22 : 17) + (big ? 5 : 0)) * S);
+    if (this.swordDir === 'u') return { x: cx - thick / 2, y: this.y - reach + 3, w: thick, h: reach };
+    if (this.swordDir === 'd') return { x: cx - thick / 2, y: this.y + this.h - 3, w: thick, h: reach };
+    return { x: this.facing > 0 ? this.x + this.w - 3 : this.x - reach + 3, y: this.y + this.h / 2 - thick / 2, w: reach, h: thick };
   }
   pogo() { this.vy = -5.2; this.dashes = this.maxDashes; this.airJumps = this.maxAirJumps; this.jumpCut = false; this.dashT = 0; }
   updateSword(sc, mx, my) {
@@ -231,7 +232,7 @@ class Player {
     if (fr === 'bondade') { kind = 'light'; speed = 9; grav = 0; pierce = 99; life = 55; dmg = Math.max(1, dmg); }
     if (fr === 'longanimidade') { kind = 'seed'; speed = Math.min(speed, 6); grav = 0.06; dmg = 1; pierce = 0; bounce = 0; life = 170; }
     const angles = fr === 'amor' ? [-0.3, -0.15, 0, 0.15, 0.3] : [0];
-    const cx = this.x + 4, cy = this.y + 5;
+    const cx = this.x + this.w / 2, cy = this.y + this.h * 0.42;
     for (const da of angles) {
       const aa = a + da;
       sc.projs.push(new Proj({
@@ -267,7 +268,7 @@ class Player {
     }
     if (pk.kind === 'shofar') {
       if (this.louvor >= this.maxLouvor) return false;
-      this.louvor++; Snd.play('pickup'); sc.ftext('+1 LOUVOR', this.cx, this.y - 8, '#f2cf5b'); return true;
+      this.louvor++; Snd.play('pickup'); sc.ftext(t('plusPraise'), this.cx, this.y - 8, '#f2cf5b'); return true;
     }
     return false;
   }
@@ -276,14 +277,14 @@ class Player {
     if (this.shield) {
       this.shield = false; this.iframes = 60; Snd.play('shieldbreak'); sc.freeze(3);
       for (let i = 0; i < 16; i++) { const a = i / 16 * 6.28; sc.part(this.cx + Math.cos(a) * 9, this.cy + Math.sin(a) * 9, Math.cos(a), Math.sin(a), '#86dcf7', 20, 1, 0); }
-      sc.ftext('PAZ', this.cx, this.y - 8, '#86dcf7');
+      sc.ftext(FRUITS.paz.name.toUpperCase(), this.cx, this.y - 8, '#86dcf7');
       return true;
     }
     this.hp--;
     const lost = this.slots[this.active];
     if (lost) {
       this.slots[this.active] = null;
-      sc.ftext('perdeu ' + FRUITS[lost].name, this.cx, this.y - 12, FRUITS[lost].color);
+      sc.ftext(t('lostFruit', FRUITS[lost].name), this.cx, this.y - 12, FRUITS[lost].color);
       for (let i = 0; i < 10; i++) sc.part(this.cx, this.cy, rand(-2, 2), rand(-3, -1), FRUITS[lost].color, 34, 2, 0.12);
       Snd.play('lose');
     }
@@ -318,8 +319,8 @@ class Player {
     this.x = Math.round(this.x); this.y = Math.round(this.y);
     if (solidRect(this.x, this.y, this.w, this.h, null) && by) { this.x = by.x; this.y = by.y; }
     Snd.play('revive');
-    sc.ftext('DE PÉ!', this.cx, this.y - 10, '#fff3c2');
-    sc.toast('Levai as cargas uns dos outros', 'Gl 6:2');
+    sc.ftext(t('revived'), this.cx, this.y - 10, '#fff3c2');
+    sc.toast(t('gal62'), t('gal62ref'));
     for (let i = 0; i < 20; i++) { const a = rand(0, 6.28); sc.part(this.cx, this.cy, Math.cos(a) * 2, Math.sin(a) * 2, '#fff3c2', 30, 1, 0); }
   }
   useLouvor(sc) {
@@ -330,24 +331,24 @@ class Player {
   // ---------------- Desenho ----------------
   draw(sc) {
     if (this.state === 'down') { this.drawOrb(sc); return; }
-    const bx = Math.round(this.x + 4), by = Math.round(this.y + this.h);
-    for (const a of this.after) { G.globalAlpha = a.l / 14 * 0.45; this.drawBody(Math.round(a.x + 4), Math.round(a.y + this.h), a.f, this.ch.color); }
+    const ax = this.x + this.w / 2, ay = this.y + this.h;
+    for (const a of this.after) { G.globalAlpha = a.l / 14 * 0.45; spriteDraw(a.x + this.w / 2, a.y + this.h, (bx, by) => this.drawBody(bx, by, a.f, this.ch.color)); }
     G.globalAlpha = 1;
-    const glow = sc.glow;
-    if (glow > 0) circ(bx, by - 7, 9 + Math.round(glow * 5), `rgba(255,240,200,${0.05 + glow * 0.09})`);
     const flick = this.iframes > 0 && this.iframes % 6 < 3;
-    if (flick) G.globalAlpha = 0.35;
-    wrapDraw(this.y, this.h, oy => {
+    wrapDraw(this.y, this.h, oy => spriteDraw(ax, ay + oy, (bx, by) => {
+      const glow = sc.glow;
+      if (glow > 0) circ(bx, by - 7, 9 + Math.round(glow * 5), `rgba(255,240,200,${0.05 + glow * 0.09})`);
+      if (flick) G.globalAlpha = 0.35;
       const ol = '#0b0912';
-      this.drawBody(bx - 1, by + oy, this.facing, ol); this.drawBody(bx + 1, by + oy, this.facing, ol);
-      this.drawBody(bx, by + oy - 1, this.facing, ol); this.drawBody(bx, by + oy + 1, this.facing, ol);
-      this.drawBody(bx, by + oy, this.facing, null); this.drawWeapons(bx, by + oy);
-    });
-    G.globalAlpha = 1;
-    if (this.shield) ring(bx, by - 7, 10 + (this.t % 30 < 15 ? 0 : 1), 'rgba(134,220,247,0.85)');
-    if (this.fruit() && this.fruitFlash > 0) { const f = this.fruit(); drawIcon(f, bx - 3, by - 26 - (this.fruitFlash > 40 ? 60 - this.fruitFlash : 0) * 0.3, FRUITS[f].color); }
-    // indicador do jogador
-    if (sc.players.length > 1) { R(bx - 1, by - 21, 3, 1, this.ch.color); R(bx, by - 20, 1, 1, this.ch.color); }
+      this.drawBody(bx - 1, by, this.facing, ol); this.drawBody(bx + 1, by, this.facing, ol);
+      this.drawBody(bx, by - 1, this.facing, ol); this.drawBody(bx, by + 1, this.facing, ol);
+      this.drawBody(bx, by, this.facing, null); this.drawWeapons(bx, by);
+      G.globalAlpha = 1;
+      if (this.shield) ring(bx, by - 7, 10 + (this.t % 30 < 15 ? 0 : 1), 'rgba(134,220,247,0.85)');
+      if (this.fruit() && this.fruitFlash > 0) { const f = this.fruit(); drawIcon(f, bx - 3, by - 26 - (this.fruitFlash > 40 ? 60 - this.fruitFlash : 0) * 0.3, FRUITS[f].color); }
+      // indicador do jogador
+      if (sc.players.length > 1) { R(bx - 1, by - 21, 3, 1, this.ch.color); R(bx, by - 20, 1, 1, this.ch.color); }
+    }));
   }
   drawBody(bx, by, f, sil) {
     const pal = this.ch.pal, id = this.ch.id;
@@ -362,7 +363,7 @@ class Player {
     const hy = bob + (this.landT > 2 ? 1 : 0) - (this.springT > 10 ? 1 : 0);
     const flap = Math.floor(this.t / 6) % 2;
     // capa
-    if (id !== 'pastora') {
+    if (id !== 'pastor') {
       const trail = Math.abs(this.vx) > 0.6 || !this.grounded ? 1 + flap : 0;
       P(-4, -9 + hy, 2, 6, C('cape'));
       if (trail) P(-4 - trail, -8 + hy + (this.vy < -1 ? 1 : 0), 2, 4, C('cape'));
@@ -381,7 +382,10 @@ class Player {
     else if (id === 'guardiao') {
       P(-3, -15 + hy, 6, 3, C('hood')); P(-3, -12 + hy, 1, 2, C('hood')); P(2, -12 + hy, 1, 2, sil || shade(pal.hood, -0.35));
       P(-1, -18 + hy, 2, 3, C('acc')); P(-2 - flap, -17 + hy, 1, 2, C('tunic')); P(-3, -9 + hy, 2, 2, C('hood'));
-    } else if (id === 'pastora') { P(-3, -15 + hy, 6, 2, C('hood')); P(-3, -13 + hy, 2, 4, C('hood')); P(-3, -15 + hy, 6, 1, C('acc')); }
+    } else if (id === 'pastor') {
+      P(-3, -15 + hy, 6, 2, C('hood')); P(-3, -13 + hy, 2, 4, C('hood')); P(-3, -14 + hy, 6, 1, C('acc'));
+      P(0, -10 + hy, 3, 1, C('beard')); P(2, -11 + hy, 1, 1, C('beard')); P(-1, -11 + hy, 1, 2, C('beard'));
+    }
     else if (id === 'vigia') {
       P(-3, -15 + hy, 6, 2, C('hood')); P(-3, -13 + hy, 1, 4, C('hood')); P(-3, -15 + hy, 6, 1, C('acc'));
       if (!sil) { P(-6, -7 + hy, 3, 3, '#ffd86b'); P(-5, -8 + hy, 1, 1, '#8a6a2a'); P(-5, -6 + hy, 1, 1, '#fff6c8'); }
@@ -434,9 +438,9 @@ class Player {
     }
   }
   drawOrb(sc) {
-    const x = this.x + 4, y = this.y + 6, t = this.downT;
+    const x = this.x + this.w / 2, y = this.y + this.h / 2, t = this.downT;
     const p = 1 + Math.sin(t * 0.12) * 0.15;
-    wrapDraw(this.y, 12, oy => {
+    wrapDraw(this.y, this.h, oy => {
       circ(x, y + oy, 9 * p, rgba(this.ch.color, 0.18));
       circ(x, y + oy, 5, rgba(this.ch.color, 0.55));
       circ(x, y + oy, 3, '#fff6e8');

@@ -21,6 +21,15 @@ Abra `dist/peregrinos.html` num navegador (Chrome, Edge ou Firefox). Não precis
 
 `M` liga e desliga a música. Para 3 ou 4 jogadores, use controles. Na tela de personagens, cada pessoa aperta PULAR no próprio teclado ou controle para entrar.
 
+### Opções
+
+- **Idioma**: português ou inglês (tela inicial, mapa ou pausa). Na primeira vez, o jogo segue o idioma do navegador. Os versículos em inglês seguem a King James (domínio público).
+- **Tamanho dos personagens**: 100%, 120%, 125% (padrão) ou 130%. Vale para jogadores, inimigos e cativos, e a caixa de colisão acompanha a escala. Os chefes mantêm o tamanho.
+
+### Catálogo
+
+`dist/catalogo.html` mostra cada personagem, inimigo, chefe, fruto, dom, elemento, cativo e cenário, desenhados ao vivo pelo próprio código do jogo. Gere de novo com `node tools/build_catalog.js`.
+
 ### Movimento
 
 O movimento foi feito para ser fluido: aceleração rápida, salto variável (segurar = mais alto), *coyote time* e *buffer* de pulo, correção de quinas, deslizar e pular nas paredes, queda rápida (segurar para baixo), dash em 8 direções com invulnerabilidade, salto longo (dash no chão + pulo), golpe para baixo que quica em inimigos e espinhos e pisão na cabeça dos inimigos. Como em TowerFall, o mundo dá a volta na vertical: quem cai num buraco reaparece pelo alto.
@@ -29,12 +38,14 @@ O movimento foi feito para ser fluido: aceleração rápida, salto variável (se
 
 ### Personagens
 
-| Peregrino | Armas | Traço | Versículo |
-|---|---|---|---|
-| **Peregrino** | Espada + Arco | Dash recarrega mais rápido | Hb 11:13 |
-| **Guardião** | Espada + Besta (virotes perfurantes) | +1 coração, recua menos | Is 62:6 |
-| **Pastora** | Cajado (golpe amplo) + Funda (pedras que quicam) | Salta mais alto | 1 Sm 17:45 |
-| **Vigia** | Espada + Arco Leve (rápido) | Lâmpada: mais luz, revela paredes falsas | Mt 25:13 |
+Cada personagem tem um nome próprio e uma classe.
+
+| Nome | Classe (inglês) | Armas | Traço | Versículo |
+|---|---|---|---|---|
+| **Rowan** | Peregrino (Pilgrim) | Espada + Arco | Dash recarrega mais rápido | Hb 11:13 |
+| **Garrett** | Guardião (Guardian) | Espada + Besta (virotes perfurantes) | +1 coração, recua menos | Is 62:6 |
+| **Wesley** | Pastor (Shepherd) | Cajado (golpe amplo) + Funda (pedras que quicam) | Salta mais alto | 1 Pe 5:2 |
+| **Lucy** | Vigia (Watcher) | Espada + Arco Leve (rápido) | Lâmpada: mais luz, revela paredes falsas | Mt 25:13 |
 
 ### Fases, pecados e chefes
 
@@ -95,7 +106,7 @@ Inimigos das arenas e a vida dos chefes também crescem com o número de jogador
 
 ## Estrutura do código
 
-Tudo é JavaScript puro em canvas, sem dependências. A arte é desenhada por código (pixel art) e a música é sintetizada na hora, incluindo versões chiptune de hinos em domínio público (Doxologia/Old Hundredth, 1551, e Amazing Grace/New Britain, 1829).
+Tudo é JavaScript puro em canvas, sem dependências. A arte é desenhada por código (pixel art), e os cenários têm quatro camadas de paralaxe com perspectiva atmosférica e a música é sintetizada na hora, incluindo versões chiptune de hinos em domínio público (Doxologia/Old Hundredth, 1551, e Amazing Grace/New Britain, 1829).
 
 ```
 src/
@@ -103,6 +114,7 @@ src/
   01_input.js     teclado (2 jogadores) e controles (4)
   02_audio.js     efeitos e músicas
   03_data.js      personagens, frutos, dons, dificuldades, fases, versículos
+  03_i18n.js      textos da interface e camada em inglês dos dados
   04_rooms.js     salas desenhadas em texto (40 x 22 tiles)
   05_level.js     montagem das fases, colisão, cache dos tiles
   06_entities.js  projéteis, itens, vasos, cativos, Ebenézer, molas
@@ -116,6 +128,7 @@ src/
   shell.html      página base
 tools/
   build.js        gera dist/peregrinos.html (arquivo único)
+  build_catalog.js gera dist/catalogo.html (catálogo visual)
   check_rooms.js  valida as salas
   reach.js        verifica se itens e saídas são alcançáveis
 ```
