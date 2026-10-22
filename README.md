@@ -10,6 +10,18 @@ Plataforma cooperativa local (1 a 4 jogadores) no espírito de TowerFall Ascensi
 
 Abra `dist/kami-quest.html` num navegador (Chrome, Edge ou Firefox). Não precisa de instalação nem de internet, exceto para as fontes.
 
+### Jogar online, instalar e compartilhar
+
+O jogo é publicado no GitHub Pages: **https://decoworship.github.io/kami-quest/** (catálogo em `/catalogo.html`). Basta mandar o link para os amigos.
+
+- **Ativar (uma vez só):** no GitHub, abra *Settings → Pages* e em *Source* escolha **GitHub Actions**. A partir daí, cada push no `main` publica a versão nova sozinho (`.github/workflows/pages.yml`). Na aba *Actions*, o botão *Run workflow* publica na hora.
+- **Instalar como app:** no Chrome ou Edge, abra o link e clique no ícone de instalar na barra de endereço (ou menu ⋮ → *Instalar Kami Quest*). O jogo ganha ícone próprio, abre em tela cheia e funciona sem internet depois da primeira visita. Quando sai versão nova, ela chega sozinha na próxima vez que o jogo abre com internet.
+- **Sem internet nenhuma:** mande o arquivo `dist/kami-quest.html`. Ele roda com dois cliques, só com a fonte do sistema no lugar da fonte do jogo.
+- **Celular e tablet:** o jogo ainda não tem controles na tela, então precisa de um controle Bluetooth (ou teclado).
+- **Cooperativo à distância:** o modo cooperativo é local (todos no mesmo computador). Para jogar com quem está longe, quem hospeda pode usar um programa de jogo remoto como o Parsec, que transmite a tela e recebe os controles dos amigos.
+
+O site é gerado por `node tools/build_web.js` (depois de `build.js` e `build_catalog.js`) na pasta `site/`, com o jogo como `index.html`, o manifesto, os ícones de `tools/web/` e o *service worker* que guarda tudo para jogar offline.
+
 | Ação | Teclado 1 | Teclado 2 | Controle |
 |---|---|---|---|
 | Mover / mirar (8 direções) | W A S D | Setas | Analógico / D-pad |
@@ -133,6 +145,8 @@ src/
 tools/
   build.js        gera dist/kami-quest.html (arquivo único)
   build_catalog.js gera dist/catalogo.html (catálogo visual)
+  build_web.js    gera site/ para o GitHub Pages (app instalável, offline)
+  web/            ícones e service worker do site
   check_rooms.js  valida as salas
   reach.js        verifica se itens e saídas são alcançáveis
 ```
