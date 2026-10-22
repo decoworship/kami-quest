@@ -7,11 +7,11 @@ const path = require('path');
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message + '\n' + e.stack));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
-  await page.goto('file://' + path.resolve(__dirname, '../dist/peregrinos.html'));
+  await page.goto('file://' + path.resolve(__dirname, '../dist/kami-quest.html'));
   await page.waitForTimeout(300);
   for (let ph = 0; ph < 5; ph++) {
     const r = await page.evaluate((ph) => {
-      const P = window.__peregrinos, K = P.Input.keys;
+      const P = window.__kami, K = P.Input.keys;
       P.Save.data.started = true; P.Save.data.diff = ph % 3;
       P.Save.data.gifts = ph >= 2 ? ['fe', 'cura', 'sabedoria', 'discernimento'] : [];
       P.Game.party = [{ ci: ph % 4, dev: 'kb1' }, { ci: (ph + 1) % 4, dev: 'kb2' }];

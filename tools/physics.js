@@ -5,10 +5,10 @@ const path = require('path');
   const page = await browser.newPage({ viewport: { width: 960, height: 540 } });
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message + '\n' + e.stack));
-  await page.goto('file://' + path.resolve(__dirname, '../dist/peregrinos.html'));
+  await page.goto('file://' + path.resolve(__dirname, '../dist/kami-quest.html'));
   await page.waitForTimeout(300);
   const res = await page.evaluate(() => {
-    const P = window.__peregrinos, I = P.Input;
+    const P = window.__kami, I = P.Input;
     P.Save.data.started = true;
     P.Game.party = [{ ci: 0, dev: 'kb1' }];
     P.Game.startPhase(0);

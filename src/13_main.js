@@ -5,6 +5,10 @@ const Game = {
   scene: null, party: null, captiveTotals: [],
   init() {
     Save.load();
+    let lang = Save.data.lang;
+    if (!lang) { try { lang = /^pt/i.test(navigator.language || '') ? 'pt' : 'en'; } catch (e) { lang = 'pt'; } }
+    applyLang(lang); this.updateStartText();
+    if (SPRITE_SCALES.includes(Save.data.spriteScale)) SPRITE_SCALE = Save.data.spriteScale;
     this.captiveTotals = PHASES.map((_, i) => buildLevel(i).captiveCount);
     if (Save.data.party) this.party = Save.data.party;
     this.scene = new TitleScene(this);
@@ -21,6 +25,21 @@ const Game = {
     if (!this.party) return null;
     const p = this.party.filter(m => Input.devs[m.dev] && Input.devs[m.dev].connected !== false);
     return p.length ? p : null;
+  },
+  setLang(l) { applyLang(l); Save.data.lang = LANG; Save.write(); this.updateStartText(); },
+  cycleSpriteScale(dir) {
+    const i = SPRITE_SCALES.indexOf(SPRITE_SCALE);
+    SPRITE_SCALE = SPRITE_SCALES[mod((i < 0 ? 2 : i) + dir, SPRITE_SCALES.length)];
+    Save.data.spriteScale = SPRITE_SCALE; Save.write();
+  },
+  updateStartText() {
+    try {
+      const st = document.getElementById('start'); if (!st) return;
+      st.querySelector('h1').textContent = t('gameTitle');
+      st.querySelector('.sub').textContent = t('gameSub');
+      st.querySelector('.go').textContent = t('startClick');
+      st.querySelector('.note').textContent = t('startNote');
+    } catch (e) { }
   },
   toTitle() { this.scene = new TitleScene(this); },
   toSelect(next) { this.scene = new SelectScene(this, next); },
@@ -52,6 +71,10 @@ const Game = {
     const dpr = window.devicePixelRatio || 1;
     uc.width = Math.round(cw * dpr); uc.height = Math.round(ch * dpr);
     uiScale = uc.width / W;
+    // resolução interna inteira próxima da tela: sprites ampliados continuam nítidos
+    RES = clamp(Math.round(s * dpr), 1, 4);
+    if (gc.width !== W * RES) { gc.width = W * RES; gc.height = H * RES; }
+    G.imageSmoothingEnabled = false;
   }
   window.addEventListener('resize', resize); resize();
   Input.init();
@@ -62,7 +85,7 @@ const Game = {
   let acc = 0, last = performance.now();
   const STEP = 1 / 60;
   function render() {
-    G.setTransform(1, 0, 0, 1, 0, 0); G.globalAlpha = 1;
+    resetG();
     Game.scene.draw();
     U.setTransform(1, 0, 0, 1, 0, 0); U.clearRect(0, 0, uc.width, uc.height);
     U.setTransform(uiScale, 0, 0, uiScale, 0, 0);
@@ -82,7 +105,7 @@ const Game = {
   }
   requestAnimationFrame(frame);
   // gancho para testes automatizados
-  window.__peregrinos = {
+  window.__kami = {
     Game, Save, Input, PHASES, get LV() { return LV; },
     step(n = 1) { for (let i = 0; i < n; i++) { Input.poll(); Game.scene.update(); } render(); },
     warp(r) {
@@ -91,7 +114,7 @@ const Game = {
       for (const room of LV.rooms) if (room.i < r && (room.type === 'arena' || room.type === 'boss')) room.state = 'done';
       sc.enemies = sc.enemies.filter(e => !e.wave); sc.projs = [];
       const room = LV.rooms[r];
-      for (const p of sc.players) { p.x = room.x0 + 24 + p.slot * 10; p.y = 18 * TS - 12; p.vx = 0; p.vy = 0; p.rx = 0; p.ry = 0; p.state = 'alive'; p.hp = p.maxHp; }
+      for (const p of sc.players) { p.x = room.x0 + 24 + p.slot * 12; p.y = 19 * TS - p.h - 1; p.vx = 0; p.vy = 0; p.rx = 0; p.ry = 0; p.state = 'alive'; p.hp = p.maxHp; }
       sc.cam = clamp(room.x0, 0, LV.w - W);
     },
   };

@@ -79,7 +79,7 @@ const Input = {
 
 // Rótulos de controle mostrados nas telas
 const CONTROL_LABELS = {
-  kb1: { move: 'W A S D', jump: 'J / Espaço', sword: 'K', shoot: 'L', dash: 'Ç / Shift esq.', swap: 'U / Q', special: 'I / E', start: 'Esc' },
+  kb1: { move: 'W A S D', jump: 'J / Espaço', sword: 'K', shoot: 'L', dash: 'Ç (;) / Shift esq.', swap: 'U / Q', special: 'I / E', start: 'Esc' },
   kb2: { move: 'Setas', jump: 'Num 1 / Z', sword: 'Num 2 / X', shoot: 'Num 3 / C', dash: 'Num 0 / V', swap: 'Num 4 / B', special: 'Num 5 / N', start: 'Num + / Esc' },
   pad: { move: 'Analógico / D-pad', jump: 'A', sword: 'X', shoot: 'B', dash: 'RB / RT', swap: 'Y', special: 'LB / LT', start: 'Start' },
 };

@@ -6,11 +6,11 @@ const path = require('path');
   const page = await browser.newPage();
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message + '\n' + e.stack));
-  await page.goto('file://' + path.resolve(__dirname, '../dist/peregrinos.html'));
+  await page.goto('file://' + path.resolve(__dirname, '../dist/kami-quest.html'));
   await page.waitForTimeout(300);
   for (const ph of (process.env.PHS || "0,1,2,3,4").split(",").map(Number)) {
     const r = await page.evaluate((ph) => {
-      const P = window.__peregrinos, K = P.Input.keys;
+      const P = window.__kami, K = P.Input.keys;
       P.Save.data.started = true; P.Save.data.diff = 1;
       P.Game.party = [{ ci: 0, dev: 'kb1' }];
       P.Game.startPhase(ph); P.warp(6);
