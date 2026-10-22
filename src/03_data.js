@@ -109,7 +109,7 @@ const PHASES = [
     blurb: 'Um vale macio e enevoado onde tudo convida a dormir. As telas brilham, as horas escorrem.',
     intro: { text: 'Desperta, ó tu que dormes, levanta-te dentre os mortos, e Cristo te iluminará.', ref: 'Ef 5:14' },
     enemies: ['lesma', 'olho', 'poltrona'], boss: 'preguica', music: 'p0',
-    rooms: ['SA', 'EA', 'AR1', 'EE', 'AR2', 'ED', 'BOSS'],
+    rooms: ['SA', 'C1A', 'AR1', 'C1B', 'AR2', 'C1C', 'BOSS1'],
     captive: 'casulo',
     lines: ['Eu dormi a vida inteira...', 'Acordei! Obrigado!', 'Quanto tempo eu perdi...', 'Desperto, enfim!', 'Eu nem via o tempo passar.'],
     scrolls: [
@@ -130,7 +130,7 @@ const PHASES = [
     blurb: 'Uma feira dourada que nunca fecha. Espelhos por toda parte, moedas tilintando, aplausos vazios.',
     intro: { text: 'Vaidade de vaidades, tudo é vaidade.', ref: 'Ec 1:2' },
     enemies: ['caranguejo', 'balao', 'pavao'], boss: 'soberba', music: 'p1',
-    rooms: ['SB', 'EB', 'AR3', 'EC', 'AR4', 'EF:m', 'BOSS'],
+    rooms: ['SB', 'EA', 'AR3', 'C2A', 'AR5', 'C2B', 'BOSS2'],
     captive: 'gaiola',
     lines: ['A gaiola era de ouro, mas era gaiola.', 'Eu tinha tudo e não tinha nada.', 'Livre! Que alívio!', 'Não preciso mais de aplausos.', 'Obrigado, irmão!'],
     scrolls: [
@@ -141,7 +141,7 @@ const PHASES = [
     bossCard: { name: 'SOBERBA', title: 'O Rei Inchado', text: 'A soberba precede a ruína, e a altivez do espírito, a queda.', ref: 'Pv 16:18' },
     gift: 'cura',
     theme: {
-      sky: ['#1a0920', '#46153f', '#86355a'], far: '#3a1436', mid: '#2b0f29', near: '#200b1e',
+      sky: ['#0a0c22', '#1c2350', '#433a76'], far: '#222852', mid: '#191d3e', near: '#12152c',
       tile: '#c2a86f', tileDark: '#86703f', tileLight: '#e2d09a', top: '#f2cf5b', topDark: '#b38b2c',
       plat: '#b9875a', platDark: '#7a5536', spike: '#f2cf5b', particle: 'glitter', bg: 'towers', accent: '#ffd36b',
     },
@@ -151,7 +151,7 @@ const PHASES = [
     blurb: 'Túneis de basalto onde o rancor ferve. Raízes amargas rachando a rocha, línguas de fogo no escuro.',
     intro: { text: 'Irai-vos e não pequeis; não se ponha o sol sobre a vossa ira.', ref: 'Ef 4:26' },
     enemies: ['brasa', 'lingua', 'raiz'], boss: 'ira', music: 'p2',
-    rooms: ['SA', 'EC:m', 'AR2', 'EA:m', 'AR1', 'EB', 'BOSS'],
+    rooms: ['S3', 'EB', 'AR6', 'C3A', 'AR10', 'EC', 'BOSS3'],
     captive: 'correntes',
     lines: ['Eu não conseguia perdoar...', 'O fogo apagou. Que paz.', 'Eu me queimava por dentro.', 'Perdão... finalmente.', 'Obrigado por não desistir de mim.'],
     scrolls: [
@@ -172,7 +172,7 @@ const PHASES = [
     blurb: 'Águas escuras e profundas. As luzes mais bonitas são iscas; a verdade é a única lâmpada.',
     intro: { text: 'O próprio Satanás se transforma em anjo de luz.', ref: '2 Co 11:14' },
     enemies: ['serpente', 'isca', 'mascara'], boss: 'serpente', music: 'p3',
-    rooms: ['SB', 'EF', 'AR4', 'ED:m', 'AR3', 'EE:m', 'BOSS'],
+    rooms: ['S4', 'EF', 'AR4', 'C4A', 'AR7', 'ED', 'BOSS4'],
     captive: 'bolha', dark: true,
     lines: ['Parecia tão bonito...', 'Eu acreditei na mentira.', 'Agora eu vejo!', 'A verdade me libertou.', 'Que bom ver a luz de novo.'],
     scrolls: [
@@ -193,7 +193,7 @@ const PHASES = [
     blurb: 'Cinzas, névoa e acusações sussurradas. Ao longe, sobre um monte, uma cruz.',
     intro: { text: 'Ainda que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo.', ref: 'Sl 23:4' },
     enemies: ['corrente', 'sombra', 'nevoa'], boss: 'acusador', music: 'p4',
-    rooms: ['SA', 'EA', 'AR1', 'EF:m', 'AR4', 'ED', 'BOSS'],
+    rooms: ['S5', 'EE', 'AR8', 'C5A', 'AR9', 'C5B', 'BOSS5'],
     captive: 'sombra', fog: true,
     lines: ['Eu achei que não tinha perdão.', 'A culpa pesava tanto...', 'Não tenho mais medo.', 'Está consumado... eu creio!', 'Obrigado por vir me buscar.'],
     scrolls: [
@@ -204,9 +204,9 @@ const PHASES = [
     bossCard: { name: 'O ACUSADOR', title: 'Aquele que acusa dia e noite', text: 'Foi expulso o acusador de nossos irmãos.', ref: 'Ap 12:10' },
     gift: null,
     theme: {
-      sky: ['#111115', '#27272f', '#46444e'], far: '#2a2930', mid: '#1f1e24', near: '#17161b',
-      tile: '#67636d', tileDark: '#43404a', tileLight: '#88848e', top: '#a29d95', topDark: '#6a665f',
-      plat: '#5f5a52', platDark: '#3d3a35', spike: '#b0aab8', particle: 'ash', bg: 'shadow', accent: '#e8e0ff',
+      sky: ['#120d0c', '#2d201c', '#5c3f33'], far: '#2d2421', mid: '#211a18', near: '#171211',
+      tile: '#5c544e', tileDark: '#3b3531', tileLight: '#7a726b', top: '#8e847a', topDark: '#5c544e',
+      plat: '#5a4c40', platDark: '#3a3029', spike: '#b8a898', particle: 'ash', bg: 'shadow', accent: '#f0d8c0', fog: '205,185,165',
     },
   },
 ];

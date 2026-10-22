@@ -74,6 +74,11 @@ function buildBackground(th) {
     const g2 = sx.createLinearGradient(0, H * 0.55, 0, H); g2.addColorStop(0, 'rgba(255,90,30,0)'); g2.addColorStop(1, 'rgba(255,90,30,0.28)');
     sx.fillStyle = g2; sx.fillRect(0, H * 0.55, W, H * 0.45);
   }
+  if (th.bg === 'shadow') {
+    const g2 = sx.createRadialGradient(430, 236, 4, 430, 236, 140); g2.addColorStop(0, 'rgba(230,120,80,0.32)'); g2.addColorStop(1, 'rgba(230,120,80,0)');
+    sx.fillStyle = g2; sx.fillRect(0, 0, W, H);
+    sx.fillStyle = 'rgba(170,80,55,0.55)'; sx.beginPath(); sx.arc(430, 236, 22, 0, 7); sx.fill();
+  }
   if (th.bg === 'towers') {
     const g2 = sx.createRadialGradient(W * 0.5, H * 0.95, 10, W * 0.5, H * 0.95, 360); g2.addColorStop(0, 'rgba(255,200,120,0.18)'); g2.addColorStop(1, 'rgba(255,200,120,0)');
     sx.fillStyle = g2; sx.fillRect(0, 0, W, H);
@@ -184,8 +189,8 @@ function buildBackground(th) {
     // 3: folhas de alga próximas
     for (let i = 0; i < 20; i++) { const x = rnd() * BG_LW, h = 40 + rnd() * 60, ph = rnd() * 6; seam(d => { const c = X[3]; c.strokeStyle = C[3]; c.lineWidth = 4; c.beginPath(); c.moveTo(x + d, H); for (let y = 0; y < h; y += 6) c.lineTo(x + d + Math.sin(y * 0.08 + ph) * 5, H - y); c.stroke(); }); }
   } else if (th.bg === 'shadow') {
-    // 0: montanhas na névoa
-    ridge(X[0], C[0], 210, [[30, 3], [10, 8], [4, 19]], rnd, 2);
+    // 0: penhascos recortados na névoa
+    ridge(X[0], C[0], 206, [[30, 2], [16, 5], [8, 13]], rnd, 18);
     // 1: cidade em ruínas
     for (let i = 0; i < 18; i++) {
       const x = Math.floor(rnd() * BG_LW), w = 16 + Math.floor(rnd() * 26), h = 40 + Math.floor(rnd() * 90), y = 262 - h, broken = rnd();
@@ -203,7 +208,7 @@ function buildBackground(th) {
     for (let i = 0; i < 10; i++) { const x = Math.floor(rnd() * BG_LW); seam(d => { X[3].fillStyle = C[3]; X[3].fillRect(x + d, 284, 2, 24); X[3].fillRect(x + d - 3, 288, 8, 1); }); }
   }
   const fog = mkCanvas(640, 200), fgx = fog.getContext('2d');
-  for (let i = 0; i < 70; i++) { const x = rnd() * 640, y = 40 + rnd() * 120, r = 20 + rnd() * 40; const g3 = fgx.createRadialGradient(x, y, 0, x, y, r); g3.addColorStop(0, 'rgba(200,200,215,0.16)'); g3.addColorStop(1, 'rgba(200,200,215,0)'); fgx.fillStyle = g3; fgx.fillRect(x - r, y - r, r * 2, r * 2); }
+  for (let i = 0; i < 70; i++) { const x = rnd() * 640, y = 40 + rnd() * 120, r = 20 + rnd() * 40; const g3 = fgx.createRadialGradient(x, y, 0, x, y, r); const fc = th.fog || '200,200,215'; g3.addColorStop(0, `rgba(${fc},0.16)`); g3.addColorStop(1, `rgba(${fc},0)`); fgx.fillStyle = g3; fgx.fillRect(x - r, y - r, r * 2, r * 2); }
   // névoa de profundidade entre as camadas
   const haze = mkCanvas(W, H), hz = haze.getContext('2d');
   const hg = hz.createLinearGradient(0, 150, 0, 320);

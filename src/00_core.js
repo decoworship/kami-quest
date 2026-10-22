@@ -1,6 +1,6 @@
 'use strict';
 // ============================================================
-//  PEREGRINOS — O Caminho Estreito
+//  KAMI QUEST — O Caminho Estreito
 //  Núcleo: constantes, utilidades, desenho em pixel, save
 // ============================================================
 

@@ -7,7 +7,7 @@
 let LANG = 'pt';
 
 const STR = {
-  gameTitle: { pt: 'PEREGRINOS', en: 'PILGRIMS' },
+  gameTitle: { pt: 'KAMI QUEST', en: 'KAMI QUEST' },
   gameSub: { pt: 'O Caminho Estreito', en: 'The Narrow Way' },
   titleVerse: { pt: '"Estreita é a porta, e apertado o caminho que conduz para a vida." — Mt 7:14', en: '"Strait is the gate, and narrow is the way, which leadeth unto life." — Matt 7:14' },
   continueJourney: { pt: 'Continuar jornada', en: 'Continue journey' },
@@ -28,8 +28,8 @@ const STR = {
   eraseJourney: { pt: 'Apagar e recomeçar', en: 'Erase and start over' },
   aboutTitle: { pt: 'SOBRE A JORNADA', en: 'ABOUT THE JOURNEY' },
   about1: {
-    pt: 'Peregrinos é uma metáfora da vida cristã. Cada fase é um terreno da alma, e cada inimigo é a caricatura sombria de um pecado ou tentação: a preguiça que adormece, a soberba que incha, a ira que queima, o engano que seduz, a culpa que acusa.',
-    en: 'Pilgrims is a picture of the Christian life. Each stage is a landscape of the soul, and each enemy is a dark caricature of a sin or temptation: sloth that lulls to sleep, pride that swells, wrath that burns, deceit that seduces, guilt that accuses.',
+    pt: 'Kami Quest é uma metáfora da vida cristã: "Kami" é Deus em japonês, e "quest" é jornada. Cada fase é um terreno da alma, e cada inimigo é a caricatura sombria de um pecado ou tentação: a preguiça que adormece, a soberba que incha, a ira que queima, o engano que seduz, a culpa que acusa.',
+    en: 'Kami Quest is a picture of the Christian life: "Kami" is God in Japanese, and a "quest" is a journey. Each stage is a landscape of the soul, and each enemy is a dark caricature of a sin or temptation: sloth that lulls to sleep, pride that swells, wrath that burns, deceit that seduces, guilt that accuses.',
   },
   about2: {
     pt: 'Os Frutos do Espírito (Gálatas 5) chegam em vasos de barro (2 Co 4:7) e se perdem quando você é ferido. Os dons espirituais (1 Coríntios 12) são recebidos ao vencer cada chefe e ficam com você.',
@@ -101,7 +101,7 @@ const STR = {
   end6full: { pt: 'Vocês encontraram todos os pergaminhos e não deixaram ninguém para trás.', en: 'You found every scroll and left no one behind.' },
   end6part: { pt: 'A jornada continua: volte às fases, encontre os pergaminhos e liberte quem ficou para trás.', en: 'The journey goes on: return to the stages, find the scrolls and free those left behind.' },
   end7: { pt: '"E Deus lhes enxugará dos olhos toda lágrima." — Ap 21:4', en: '"And God shall wipe away all tears from their eyes." — Rev 21:4' },
-  end8: { pt: 'PEREGRINOS · O Caminho Estreito', en: 'PILGRIMS · The Narrow Way' },
+  end8: { pt: 'KAMI QUEST · O Caminho Estreito', en: 'KAMI QUEST · The Narrow Way' },
   end9: { pt: 'Músicas: Doxologia (Old Hundredth, 1551) e Amazing Grace (New Britain, 1829), domínio público.', en: 'Music: Doxology (Old Hundredth, 1551) and Amazing Grace (New Britain, 1829), public domain.' },
   end10: { pt: 'Obrigado por caminhar conosco.', en: 'Thank you for walking with us.' },
   endBack: { pt: 'PULAR para voltar ao mapa', en: 'JUMP to return to the map' },

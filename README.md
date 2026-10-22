@@ -1,4 +1,6 @@
-# Peregrinos — O Caminho Estreito
+# Kami Quest — O Caminho Estreito
+
+**Kami** é "Deus" em japonês e **quest** é jornada: o nome resume o jogo, uma jornada em direção a Deus.
 
 Plataforma cooperativa local (1 a 4 jogadores) no espírito de TowerFall Ascension, com power-ups no estilo Contra 3. O jogo é uma metáfora da vida cristã: os peregrinos atravessam terrenos da alma, enfrentam caricaturas sombrias de pecados e tentações, libertam pessoas presas pelo caminho e crescem em **semelhança com Cristo** (Rm 8:29; 2 Co 3:18).
 
@@ -6,7 +8,7 @@ Plataforma cooperativa local (1 a 4 jogadores) no espírito de TowerFall Ascensi
 
 ## Como jogar
 
-Abra `dist/peregrinos.html` num navegador (Chrome, Edge ou Firefox). Não precisa de instalação nem de internet, exceto para as fontes.
+Abra `dist/kami-quest.html` num navegador (Chrome, Edge ou Firefox). Não precisa de instalação nem de internet, exceto para as fontes.
 
 | Ação | Teclado 1 | Teclado 2 | Controle |
 |---|---|---|---|
@@ -51,11 +53,13 @@ Cada personagem tem um nome próprio e uma classe.
 
 | Fase | Cenário | Inimigos | Chefe | Cativos presos em |
 |---|---|---|---|---|
-| 1. Vale da Comodidade | Vale macio e enevoado, lua sonolenta | Lesma da Preguiça (deixa rastro que deixa lento), Olho da Distração (tela flutuante), Poltrona do Comodismo | **Preguiça**, de touca de dormir: bocejos que viram ondas, travesseiros, rola pela arena e ronca | Casulos de sono (Ef 5:14) |
-| 2. Feira das Vaidades | Feira dourada que nunca fecha | Caranguejo da Avareza (investida), Balão da Soberba (incha e estoura), Pavão da Vaidade (cauda de espelhos rebate tiros) | **Soberba**, o Rei Inchado: cresce conforme apanha, coroa bumerangue, chuva de moedas, queda que faz tremer | Gaiolas de ouro (Mc 8:36) |
+| 1. Vale da Comodidade | Morros lilás enevoados, lua sonolenta | Lesma da Preguiça (deixa rastro que deixa lento), Olho da Distração (tela flutuante), Poltrona do Comodismo | **Preguiça**, de touca de dormir: bocejos que viram ondas, travesseiros, rola pela arena e ronca | Casulos de sono (Ef 5:14) |
+| 2. Feira das Vaidades | Cidade azul de noite, com torres e bandeirolas; muros de ouro | Caranguejo da Avareza (investida), Balão da Soberba (incha e estoura), Pavão da Vaidade (cauda de espelhos rebate tiros) | **Soberba**, o Rei Inchado: cresce conforme apanha, coroa bumerangue, chuva de moedas, queda que faz tremer | Gaiolas de ouro (Mc 8:36) |
 | 3. Cavernas da Ira | Basalto, brasas e raízes amargas | Brasa da Ira (investida em fogo), Língua Ferina (Tg 3:6), Raiz de Amargura (Hb 12:15) | **Ira**, a Fera de Brasa: investidas que derrubam pedras, sopro de fogo, saltos com onda de choque | Correntes em brasa |
 | 4. Abismo das Ilusões | Escuridão profunda; só se vê o que a luz alcança | Serpente do Engano, Isca Sedutora (luz bonita que esconde a boca), Máscara da Mentira (sorri e depois ataca) | **A Serpente** de máscara dourada (2 Co 11:14): serpenteia, cospe veneno, mergulha atravessando a tela; a máscara se quebra | Bolhas de ilusão |
-| 5. Vale da Sombra | Cinzas e névoa; uma cruz num monte ao longe | Corrente da Culpa, Sombra do Medo (avança quando você dá as costas; encare-a), Névoa da Dúvida (some e reaparece) | **O Acusador** (Ap 12:10): palavras de acusação, correntes que brotam do chão, o pergaminho de dívidas varrendo a arena | Sombras e correntes |
+| 5. Vale da Sombra | Penhascos e ruínas cor de cinza, sol baixo atrás da névoa; uma cruz num monte ao longe | Corrente da Culpa, Sombra do Medo (avança quando você dá as costas; encare-a), Névoa da Dúvida (some e reaparece) | **O Acusador** (Ap 12:10): palavras de acusação, correntes que brotam do chão, o pergaminho de dívidas varrendo a arena | Sombras e correntes |
+
+Cada fase tem salas próprias (sete por fase, contando a arena e o chefe), então nenhum trecho se repete entre as fases.
 
 Ao vencer o Acusador, o escrito de dívida é cravado na cruz (Cl 2:14), o céu amanhece e aparece "Está consumado" (Jo 19:30).
 
@@ -127,7 +131,7 @@ src/
   13_main.js      laço principal
   shell.html      página base
 tools/
-  build.js        gera dist/peregrinos.html (arquivo único)
+  build.js        gera dist/kami-quest.html (arquivo único)
   build_catalog.js gera dist/catalogo.html (catálogo visual)
   check_rooms.js  valida as salas
   reach.js        verifica se itens e saídas são alcançáveis

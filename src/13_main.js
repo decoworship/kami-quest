@@ -105,7 +105,7 @@ const Game = {
   }
   requestAnimationFrame(frame);
   // gancho para testes automatizados
-  window.__peregrinos = {
+  window.__kami = {
     Game, Save, Input, PHASES, get LV() { return LV; },
     step(n = 1) { for (let i = 0; i < n; i++) { Input.poll(); Game.scene.update(); } render(); },
     warp(r) {

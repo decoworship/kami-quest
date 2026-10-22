@@ -4,11 +4,11 @@ const OUT = process.env.OUT || '/tmp/shots';
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.goto('file://' + path.resolve(__dirname, '../dist/peregrinos.html'));
+  await page.goto('file://' + path.resolve(__dirname, '../dist/kami-quest.html'));
   await page.waitForTimeout(300);
   for (let ph = 0; ph < 5; ph++) {
     const data = await page.evaluate((ph) => {
-      const P = window.__peregrinos;
+      const P = window.__kami;
       P.Game.party = [{ ci: 0, dev: 'kb1' }]; P.Game.startPhase(ph);
       const L = P.LV, c = document.createElement('canvas'); c.width = L.w; c.height = 352;
       const x = c.getContext('2d'); x.fillStyle = '#2a2440'; x.fillRect(0, 0, c.width, c.height); x.drawImage(L.canvas, 0, 0);
